@@ -17,7 +17,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -92,19 +91,19 @@ public class InventoryCheckConsumer {
 
         for (OrderItem item : request.getItems()) {
             log.debug("Checking inventory for productHscCode: {} | quantity: {} | correlationId: {}",
-                    item.getId(), item.getQuantity(), correlationID);
+                    item.getCode(), item.getQuantity(), correlationID);
 
             boolean available = productService.checkAndReserveStock(
-                    String.valueOf(item.getId()), item.getQuantity());
+                    String.valueOf(item.getCode()), item.getQuantity());
 
             if (!available) {
                 allAvailable = false;
                 log.warn("Inventory unavailable for productHscCode: {} | requested: {} | correlationId: {}",
-                        item.getId(), item.getQuantity(), correlationID);
+                        item.getCode(), item.getQuantity(), correlationID);
             }
 
             itemResults.add(ItemInventoryResult.builder()
-                    .productCode(String.valueOf(item.getId()))
+                    .productCode(String.valueOf(item.getCode()))
                     .productName(item.getName())
                     .requestedQuantity(item.getQuantity())
                     .available(available)
