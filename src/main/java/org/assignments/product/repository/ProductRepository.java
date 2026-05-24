@@ -22,15 +22,25 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByCode(@Param("productCode") String productCode);
 
     // Find all active products
-    @Query("SELECT p FROM Product p JOIN FETCH p.category JOIN FETCH p.vendor WHERE p.deleted = false ORDER BY p.name ASC")
+    @Query("SELECT p FROM Product p JOIN FETCH p.category WHERE p.deleted = false ORDER BY p.name ASC")
     List<Product> findAllActive();
 
     // Find by category
     @Query("SELECT p FROM Product p WHERE p.category.id = :categoryId AND p.deleted = false AND p.active = true")
     List<Product> findByCategoryId(@Param("categoryId") Long categoryId);
 
-    // Find by vendor
-    @Query("SELECT p FROM Product p WHERE p.vendor.id = :vendorId AND p.deleted = false AND p.active = true")
+    /**
+     * Products supplied by a specific vendor (via the association table).
+     */
+    @Query("""
+           SELECT DISTINCT p FROM Product p
+           JOIN p.productVendors pv
+           WHERE pv.vendor.id = :vendorId
+             AND pv.deleted   = false
+             AND pv.active    = true
+             AND p.deleted    = false
+           ORDER BY p.name ASC
+           """)
     List<Product> findByVendorId(@Param("vendorId") Long vendorId);
 
     // Find products with low stock (units below reorder level)

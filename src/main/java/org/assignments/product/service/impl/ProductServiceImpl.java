@@ -12,6 +12,7 @@ import org.assignments.inventory.exception.DuplicateResourceException;
 import org.assignments.inventory.exception.ResourceNotFoundException;
 import org.assignments.category.repository.CategoryRepository;
 import org.assignments.product.repository.ProductRepository;
+import org.assignments.vendor.entity.VendorContactPerson;
 import org.assignments.vendor.repository.VendorRepository;
 import org.assignments.product.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final VendorRepository vendorRepository;
 
     @Override
     @Transactional
@@ -40,9 +40,6 @@ public class ProductServiceImpl implements ProductService {
 
         Category category = categoryRepository.findActiveById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("ProductCategory", "id", request.getCategoryId()));
-
-        Vendor vendor = vendorRepository.findActiveById(request.getVendorId())
-                .orElseThrow(() -> new ResourceNotFoundException("Vendor", "id", request.getVendorId()));
 
         Product product = Product.builder()
                 .productCode(request.getProductCode())
@@ -60,7 +57,6 @@ public class ProductServiceImpl implements ProductService {
                 .reorderLevel(request.getReorderLevel() != null ? request.getReorderLevel() : 0)
                 .maxStockLevel(request.getMaxStockLevel())
                 .category(category)
-                .vendor(vendor)
                 .createdBy(request.getCreatedBy())
                 .build();
 
@@ -84,9 +80,6 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryRepository.findActiveById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("ProductCategory", "id", request.getCategoryId()));
 
-        Vendor vendor = vendorRepository.findActiveById(request.getVendorId())
-                .orElseThrow(() -> new ResourceNotFoundException("Vendor", "id", request.getVendorId()));
-
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setUnitPrice(request.getUnitPrice());
@@ -101,7 +94,6 @@ public class ProductServiceImpl implements ProductService {
         product.setReorderLevel(request.getReorderLevel());
         product.setMaxStockLevel(request.getMaxStockLevel());
         product.setCategory(category);
-        product.setVendor(vendor);
         product.setUpdatedBy(request.getUpdatedBy());
 
         Product updated = productRepository.save(product);
@@ -256,15 +248,12 @@ public class ProductServiceImpl implements ProductService {
                         .code(product.getCategory().getCode())
                         .name(product.getCategory().getName())
                         .build())
-                .vendor(ProductResponse.VendorSummary.builder()
-                        .id(product.getVendor().getId())
-                        .vendorCode(product.getVendor().getVendorCode())
-                        .name(product.getVendor().getName())
-                        .build())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
                 .createdBy(product.getCreatedBy())
                 .updatedBy(product.getUpdatedBy())
                 .build();
     }
+
+
 }

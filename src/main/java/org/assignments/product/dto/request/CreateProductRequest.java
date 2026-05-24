@@ -60,8 +60,7 @@ public class CreateProductRequest {
     @NotNull(message = "Category ID is required")
     private Long categoryId;
 
-    @NotNull(message = "Vendor ID is required")
-    private Long vendorId;
+    // vendorId removed — vendors are managed via POST /products/{id}/vendors
 
     @Min(value = 0, message = "Reorder level cannot be negative")
     private Integer reorderLevel;

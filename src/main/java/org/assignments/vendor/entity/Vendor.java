@@ -5,10 +5,12 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.assignments.inventory.entity.BaseEntity;
 import org.assignments.product.entity.Product;
+import org.assignments.product.entity.ProductVendor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "vendor")
@@ -59,9 +61,6 @@ public class Vendor extends BaseEntity {
     @Column(name = "pan", length = 20)
     private String pan;
 
-    @Column(name = "contact_person", length = 150)
-    private String contactPerson;
-
     @Column(name = "contract_start_date")
     private LocalDate contractStartDate;
 
@@ -74,7 +73,29 @@ public class Vendor extends BaseEntity {
     @Column(name = "updated_by", length = 100)
     private String updatedBy;
 
+    /** One vendor → many contact persons (replaces single contact_person column) */
+    @OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<VendorContactPerson> contactPersons = new ArrayList<>();
+
+    /** Reverse side of the product_vendor association */
     @OneToMany(mappedBy = "vendor", fetch = FetchType.LAZY)
     @Builder.Default
-    private List<Product> products = new ArrayList<>();
+    private List<ProductVendor> productVendors = new ArrayList<>();
+
+    /** Convenience: returns the preferred contact, if any */
+    public Optional<VendorContactPerson> getPreferredContact() {
+        return contactPersons.stream()
+                .filter(c -> c.isPreferred() && c.isActive() && !c.isDeleted())
+                .findFirst();
+    }
+
+    /** Returns all active, non-deleted contact persons */
+    public List<VendorContactPerson> getActiveContacts() {
+        return contactPersons.stream()
+                .filter(c -> c.isActive() && !c.isDeleted())
+                .toList();
+    }
+
 }

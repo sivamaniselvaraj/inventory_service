@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.assignments.constants.ApplicationConstants;
 import org.assignments.inventory.dto.request.InventoryCheckEvent;
-import org.assignments.inventory.dto.request.OrderConfirmationRequest;
 import org.assignments.inventory.dto.request.OrderItem;
 import org.assignments.inventory.dto.response.ItemInventoryResult;
 import org.assignments.inventory.dto.response.OrderConfirmationCompletedEvent;

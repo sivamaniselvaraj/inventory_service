@@ -9,6 +9,9 @@ import org.assignments.vendor.entity.Vendor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "product")
@@ -75,9 +78,15 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vendor_id", nullable = false)
-    private Vendor vendor;
+    /**
+     * Many-to-many with Vendor via the rich ProductVendor association table.
+     * Use getPreferredVendor() for the primary supplier.
+     */
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<ProductVendor> productVendors = new ArrayList<>();
+
+    // ── Convenience helpers ──────────────────────────────────────────
 
     public boolean isExpired() {
         return expiryDate != null && expiryDate.isBefore(LocalDate.now());
@@ -86,4 +95,19 @@ public class Product extends BaseEntity {
     public boolean hasStock(int requestedUnits) {
         return unitsAvailable != null && unitsAvailable >= requestedUnits;
     }
+
+    /** Returns the preferred (primary) vendor association, if any */
+    public Optional<ProductVendor> getPreferredVendor() {
+        return productVendors.stream()
+                .filter(pv -> pv.isPreferred() && pv.isActive() && !pv.isDeleted())
+                .findFirst();
+    }
+
+    /** Returns all active, non-deleted vendor associations */
+    public List<ProductVendor> getActiveVendors() {
+        return productVendors.stream()
+                .filter(pv -> pv.isActive() && !pv.isDeleted())
+                .toList();
+    }
+
 }

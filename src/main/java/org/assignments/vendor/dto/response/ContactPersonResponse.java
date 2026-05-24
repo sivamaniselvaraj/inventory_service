@@ -5,40 +5,34 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.assignments.inventory.entity.BaseEntity;
+import org.assignments.vendor.enums.ContactRole;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class VendorResponse {
+public class ContactPersonResponse {
 
     private Long id;
+    private Long vendorId;
     private String vendorCode;
-    private String name;
+    private String vendorName;
+    private String fullName;
+    private ContactRole role;
     private String email;
     private String phone;
-    private String addressLine1;
-    private String addressLine2;
-    private String city;
-    private String state;
-    private String country;
-    private String postalCode;
-    private String gstin;
-    private String pan;
-    private LocalDate contractStartDate;
-    private LocalDate contractEndDate;
+    private String alternatePhone;
+    private String designation;
+    private String department;
+    private boolean preferred;
+    private String notes;
     private boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String createdBy;
     private String updatedBy;
-
-    /** Replaces the old single contactPerson string — now a list */
-    private List<ContactPersonResponse> contactPersons;
-    private ContactPersonResponse preferredContact;
 }

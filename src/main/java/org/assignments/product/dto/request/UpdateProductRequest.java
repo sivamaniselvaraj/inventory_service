@@ -50,7 +50,7 @@ public class UpdateProductRequest {
 
     private Long categoryId;
 
-    private Long vendorId;
+    //vendors are managed via POST /products/{id}/vendors
 
     @Min(value = 0, message = "Reorder level cannot be negative")
     private Integer reorderLevel;

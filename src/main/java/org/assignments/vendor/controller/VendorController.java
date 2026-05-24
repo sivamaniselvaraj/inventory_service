@@ -3,6 +3,8 @@ package org.assignments.vendor.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.assignments.product.dto.response.ProductVendorResponse;
+import org.assignments.product.service.ProductVendorService;
 import org.assignments.vendor.dto.request.CreateVendorRequest;
 import org.assignments.vendor.dto.request.UpdateVendorRequest;
 import org.assignments.category.dto.response.ApiResponse;
@@ -21,6 +23,7 @@ import java.util.List;
 public class VendorController {
 
     private final VendorService vendorService;
+    private final ProductVendorService productVendorService;
 
     /**
      * POST /api/v1/vendors
@@ -105,5 +108,16 @@ public class VendorController {
         log.info("REST request to soft delete vendor id: {}", id);
         vendorService.softDeleteVendor(id);
         return ResponseEntity.ok(ApiResponse.success("Vendor deleted successfully", null));
+    }
+
+    /**
+     * GET /api/v1/vendors/{id}/products
+     * All product associations for a vendor
+     */
+    @GetMapping("/{id}/products")
+    public ResponseEntity<ApiResponse<List<ProductVendorResponse>>> getProductsForVendor(
+            @PathVariable Long id) {
+        log.debug("REST get products for vendor {}", id);
+        return ResponseEntity.ok(ApiResponse.success(productVendorService.getProductsForVendor(id)));
     }
 }

@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.assignments.vendor.dto.request.CreateVendorRequest;
 import org.assignments.vendor.dto.request.UpdateVendorRequest;
+import org.assignments.vendor.dto.response.ContactPersonResponse;
 import org.assignments.vendor.dto.response.VendorResponse;
 import org.assignments.vendor.entity.Vendor;
 import org.assignments.inventory.exception.DuplicateResourceException;
 import org.assignments.inventory.exception.ResourceNotFoundException;
+import org.assignments.vendor.entity.VendorContactPerson;
 import org.assignments.vendor.repository.VendorRepository;
 import org.assignments.vendor.service.VendorService;
 import org.springframework.stereotype.Service;
@@ -45,7 +47,6 @@ public class VendorServiceImpl implements VendorService {
                 .postalCode(request.getPostalCode())
                 .gstin(request.getGstin())
                 .pan(request.getPan())
-                .contactPerson(request.getContactPerson())
                 .contractStartDate(request.getContractStartDate())
                 .contractEndDate(request.getContractEndDate())
                 .createdBy(request.getCreatedBy())
@@ -75,7 +76,6 @@ public class VendorServiceImpl implements VendorService {
         vendor.setPostalCode(request.getPostalCode());
         vendor.setGstin(request.getGstin());
         vendor.setPan(request.getPan());
-        vendor.setContactPerson(request.getContactPerson());
         vendor.setContractStartDate(request.getContractStartDate());
         vendor.setContractEndDate(request.getContractEndDate());
         vendor.setUpdatedBy(request.getUpdatedBy());
@@ -144,6 +144,8 @@ public class VendorServiceImpl implements VendorService {
     }
 
     private VendorResponse toResponse(Vendor vendor) {
+
+
         return VendorResponse.builder()
                 .id(vendor.getId())
                 .vendorCode(vendor.getVendorCode())
@@ -158,7 +160,7 @@ public class VendorServiceImpl implements VendorService {
                 .postalCode(vendor.getPostalCode())
                 .gstin(vendor.getGstin())
                 .pan(vendor.getPan())
-                .contactPerson(vendor.getContactPerson())
+                .contactPersons(vendor.getPreferredContact().stream().map(this::toContactResponse).collect(Collectors.toList()))
                 .contractStartDate(vendor.getContractStartDate())
                 .contractEndDate(vendor.getContractEndDate())
                 .active(vendor.isActive())
@@ -166,6 +168,20 @@ public class VendorServiceImpl implements VendorService {
                 .updatedAt(vendor.getUpdatedAt())
                 .createdBy(vendor.getCreatedBy())
                 .updatedBy(vendor.getUpdatedBy())
+                .build();
+    }
+
+    private ContactPersonResponse toContactResponse(VendorContactPerson c) {
+        return ContactPersonResponse.builder()
+                .fullName(c.getFullName())
+                .role(c.getRole())
+                .email(c.getEmail())
+                .phone(c.getPhone())
+                .alternatePhone(c.getAlternatePhone())
+                .designation(c.getDesignation())
+                .department(c.getDepartment())
+                .preferred(c.isPreferred())
+                .notes(c.getNotes())
                 .build();
     }
 }

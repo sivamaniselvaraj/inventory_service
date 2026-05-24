@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -36,7 +37,12 @@ public class ProductResponse {
     private boolean expired;
     private boolean lowStock;
     private CategorySummary category;
-    private VendorSummary vendor;
+    /**
+     * All active vendor associations (was a single VendorSummary before).
+     * Use preferredVendor for the primary supplier.
+     */
+    private List<VendorAssociation> vendors;
+    private VendorAssociation preferredVendor;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String createdBy;
@@ -52,13 +58,19 @@ public class ProductResponse {
         private String name;
     }
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Builder
-    public static class VendorSummary {
-        private Long id;
+    @Data @NoArgsConstructor @AllArgsConstructor @Builder
+    public static class VendorAssociation {
+        private Long associationId;
+        private Long vendorId;
         private String vendorCode;
-        private String name;
+        private String vendorName;
+        private BigDecimal supplyPrice;
+        private Integer leadTimeDays;
+        private Integer minimumOrderQty;
+        private boolean preferred;
+        private String contractRef;
+        private LocalDate validFrom;
+        private LocalDate validUntil;
     }
+
 }
