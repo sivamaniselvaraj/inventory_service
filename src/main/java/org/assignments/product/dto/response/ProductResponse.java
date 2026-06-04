@@ -1,6 +1,7 @@
 package org.assignments.product.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class ProductResponse {
     private BigDecimal sellingPrice;
     private BigDecimal purchasingPrice;
     private Integer unitsAvailable;
+    private Integer barCodeValue;
     private String unitOfMeasure;
     private String manufacturedBy;
     private LocalDate manufacturedOn;

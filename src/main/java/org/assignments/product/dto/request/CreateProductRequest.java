@@ -45,6 +45,9 @@ public class CreateProductRequest {
     @Min(value = 0, message = "Units available cannot be negative")
     private Integer unitsAvailable;
 
+    @Min(value = 0, message = "Barcode Value available cannot be negative")
+    private Integer barCodeValue;
+
     @Size(max = 50, message = "Unit of measure must not exceed 50 characters")
     private String unitOfMeasure;
 

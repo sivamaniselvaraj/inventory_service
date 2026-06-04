@@ -32,6 +32,8 @@ public class UpdateProductRequest {
     @Digits(integer = 13, fraction = 2, message = "Invalid Purchasing price format")
     private BigDecimal purchasingPrice;
 
+    @Min(value = 0, message = "Barcode Value available cannot be negative")
+    private Integer barCodeValue;
 
     @Min(value = 0, message = "Units available cannot be negative")
     private Integer unitsAvailable;

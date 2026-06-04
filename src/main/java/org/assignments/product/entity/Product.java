@@ -47,6 +47,9 @@ public class Product extends BaseEntity {
     @Column(name = "units_available", nullable = false)
     private Integer unitsAvailable;
 
+    @Column(name = "barcode_number", nullable = false)
+    private Integer barCodeNumber;
+
     @Column(name = "unit_of_measure", length = 50)
     private String unitOfMeasure;
 
