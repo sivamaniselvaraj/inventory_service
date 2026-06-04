@@ -28,6 +28,10 @@ public class UpdateProductRequest {
     @Digits(integer = 13, fraction = 2, message = "Invalid Selling price format")
     private BigDecimal sellingPrice;
 
+    @DecimalMin(value = "0.0", inclusive = false, message = "Purchasing price must be greater than 0")
+    @Digits(integer = 13, fraction = 2, message = "Invalid Purchasing price format")
+    private BigDecimal purchasingPrice;
+
 
     @Min(value = 0, message = "Units available cannot be negative")
     private Integer unitsAvailable;

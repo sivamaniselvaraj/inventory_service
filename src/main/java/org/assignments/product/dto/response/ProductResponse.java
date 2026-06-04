@@ -24,6 +24,7 @@ public class ProductResponse {
     private String description;
     private BigDecimal unitPrice;
     private BigDecimal sellingPrice;
+    private BigDecimal purchasingPrice;
     private Integer unitsAvailable;
     private String unitOfMeasure;
     private String manufacturedBy;

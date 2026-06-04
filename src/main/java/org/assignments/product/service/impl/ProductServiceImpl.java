@@ -47,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
                 .description(request.getDescription())
                 .unitPrice(request.getUnitPrice())
                 .sellingPrice(request.getSellingPrice())
+                .purchasePrice(request.getPurchasingPrice())
                 .unitsAvailable(request.getUnitsAvailable())
                 .unitOfMeasure(request.getUnitOfMeasure())
                 .manufacturedBy(request.getManufacturedBy())
@@ -84,6 +85,7 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.getDescription());
         product.setUnitPrice(request.getUnitPrice());
         product.setSellingPrice(request.getSellingPrice());
+        product.setPurchasePrice(request.getPurchasingPrice());
         product.setUnitsAvailable(request.getUnitsAvailable());
         product.setUnitOfMeasure(request.getUnitOfMeasure());
         product.setManufacturedBy(request.getManufacturedBy());
@@ -231,6 +233,7 @@ public class ProductServiceImpl implements ProductService {
                 .description(product.getDescription())
                 .unitPrice(product.getUnitPrice())
                 .sellingPrice(product.getSellingPrice())
+                .purchasingPrice(product.getPurchasePrice())
                 .unitsAvailable(product.getUnitsAvailable())
                 .unitOfMeasure(product.getUnitOfMeasure())
                 .manufacturedBy(product.getManufacturedBy())
