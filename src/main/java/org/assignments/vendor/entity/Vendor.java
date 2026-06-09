@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.assignments.inventory.entity.BaseEntity;
-import org.assignments.product.entity.Product;
 import org.assignments.product.entity.ProductVendor;
 
 import java.time.LocalDate;
@@ -28,8 +27,8 @@ public class Vendor extends BaseEntity {
     @Column(name = "vendor_code", nullable = false, unique = true, length = 50)
     private String vendorCode;
 
-    @Column(name = "name", nullable = false, length = 200)
-    private String name;
+    @Column(name = "vendor_name", nullable = false, length = 200)
+    private String vendorName;
 
     @Column(name = "email", nullable = false, length = 150)
     private String email;

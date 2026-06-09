@@ -36,7 +36,7 @@ public class VendorServiceImpl implements VendorService {
 
         Vendor vendor = Vendor.builder()
                 .vendorCode(request.getVendorCode())
-                .name(request.getName())
+                .vendorName(request.getName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .addressLine1(request.getAddressLine1())
@@ -65,7 +65,7 @@ public class VendorServiceImpl implements VendorService {
         Vendor vendor = vendorRepository.findActiveById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vendor", "id", id));
 
-        vendor.setName(request.getName());
+        vendor.setVendorName(request.getName());
         vendor.setEmail(request.getEmail());
         vendor.setPhone(request.getPhone());
         vendor.setAddressLine1(request.getAddressLine1());
@@ -149,7 +149,7 @@ public class VendorServiceImpl implements VendorService {
         return VendorResponse.builder()
                 .id(vendor.getId())
                 .vendorCode(vendor.getVendorCode())
-                .name(vendor.getName())
+                .name(vendor.getVendorName())
                 .email(vendor.getEmail())
                 .phone(vendor.getPhone())
                 .addressLine1(vendor.getAddressLine1())

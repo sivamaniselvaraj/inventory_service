@@ -206,7 +206,7 @@ public class VendorContactPersonServiceImpl implements VendorContactPersonServic
                 .id(c.getId())
                 .vendorId(c.getVendor().getId())
                 .vendorCode(c.getVendor().getVendorCode())
-                .vendorName(c.getVendor().getName())
+                .vendorName(c.getVendor().getVendorName())
                 .fullName(c.getFullName())
                 .role(c.getRole())
                 .email(c.getEmail())

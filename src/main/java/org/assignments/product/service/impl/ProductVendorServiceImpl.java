@@ -230,7 +230,7 @@ public class ProductVendorServiceImpl implements ProductVendorService {
                 .productName(pv.getProduct().getName())
                 .vendorId(pv.getVendor().getId())
                 .vendorCode(pv.getVendor().getVendorCode())
-                .vendorName(pv.getVendor().getName())
+                .vendorName(pv.getVendor().getVendorName())
                 .vendorEmail(pv.getVendor().getEmail())
                 .vendorContactPerson(pv.getVendor().getPreferredContact().get().getFullName())
                 .supplyPrice(pv.getSupplyPrice())
