@@ -6,7 +6,6 @@ import lombok.experimental.SuperBuilder;
 import org.assignments.inventory.entity.BaseEntity;
 import org.assignments.product.entity.Product;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +25,11 @@ public class Category extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "code", nullable = false, unique = true, length = 50)
-    private String code;
+    @Column(name = "category_code", nullable = false, unique = true, length = 50)
+    private String categoryCode;
 
-    @Column(name = "name", nullable = false, length = 200)
-    private String name;
+    @Column(name = "category_name", nullable = false, length = 200)
+    private String categoryName;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;

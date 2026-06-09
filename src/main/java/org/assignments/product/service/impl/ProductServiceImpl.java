@@ -7,13 +7,10 @@ import org.assignments.product.dto.request.UpdateProductRequest;
 import org.assignments.product.dto.response.ProductResponse;
 import org.assignments.product.entity.Product;
 import org.assignments.category.entity.Category;
-import org.assignments.vendor.entity.Vendor;
 import org.assignments.inventory.exception.DuplicateResourceException;
 import org.assignments.inventory.exception.ResourceNotFoundException;
 import org.assignments.category.repository.CategoryRepository;
 import org.assignments.product.repository.ProductRepository;
-import org.assignments.vendor.entity.VendorContactPerson;
-import org.assignments.vendor.repository.VendorRepository;
 import org.assignments.product.service.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = Product.builder()
                 .productCode(request.getProductCode())
-                .name(request.getName())
+                .productName(request.getName())
                 .description(request.getDescription())
                 .unitPrice(request.getUnitPrice())
                 .sellingPrice(request.getSellingPrice())
@@ -82,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryRepository.findActiveById(request.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("ProductCategory", "id", request.getCategoryId()));
 
-        product.setName(request.getName());
+        product.setProductName(request.getName());
         product.setDescription(request.getDescription());
         product.setUnitPrice(request.getUnitPrice());
         product.setSellingPrice(request.getSellingPrice());
@@ -231,7 +228,7 @@ public class ProductServiceImpl implements ProductService {
         return ProductResponse.builder()
                 .id(product.getId())
                 .productCode(product.getProductCode())
-                .name(product.getName())
+                .name(product.getProductName())
                 .description(product.getDescription())
                 .unitPrice(product.getUnitPrice())
                 .sellingPrice(product.getSellingPrice())
@@ -251,8 +248,8 @@ public class ProductServiceImpl implements ProductService {
                 .lowStock(lowStock)
                 .category(ProductResponse.CategorySummary.builder()
                         .id(product.getCategory().getId())
-                        .code(product.getCategory().getCode())
-                        .name(product.getCategory().getName())
+                        .code(product.getCategory().getCategoryCode())
+                        .name(product.getCategory().getCategoryName())
                         .build())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())

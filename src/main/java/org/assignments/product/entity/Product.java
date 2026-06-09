@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.assignments.inventory.entity.BaseEntity;
 import org.assignments.category.entity.Category;
-import org.assignments.vendor.entity.Vendor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,8 +28,8 @@ public class Product extends BaseEntity {
     @Column(name = "product_code", nullable = false, unique = true, length = 50)
     private String productCode;
 
-    @Column(name = "name", nullable = false, length = 300)
-    private String name;
+    @Column(name = "product_name", nullable = false, length = 300)
+    private String productName;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;

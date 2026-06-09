@@ -227,7 +227,7 @@ public class ProductVendorServiceImpl implements ProductVendorService {
                 .id(pv.getId())
                 .productId(pv.getProduct().getId())
                 .productHscCode(pv.getProduct().getProductCode())
-                .productName(pv.getProduct().getName())
+                .productName(pv.getProduct().getProductName())
                 .vendorId(pv.getVendor().getId())
                 .vendorCode(pv.getVendor().getVendorCode())
                 .vendorName(pv.getVendor().getVendorName())

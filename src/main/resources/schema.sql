@@ -4,7 +4,7 @@
 CREATE TABLE IF NOT EXISTS vendor (
     id                  BIGINT          NOT NULL AUTO_INCREMENT,
     vendor_code         VARCHAR(50)     NOT NULL,
-    name                VARCHAR(200)    NOT NULL,
+    vendor_name         VARCHAR(200)    NOT NULL,
     email               VARCHAR(150)    NOT NULL,
     phone               VARCHAR(20),
     address_line1       VARCHAR(255),
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS vendor (
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS category (
     id          BIGINT          NOT NULL AUTO_INCREMENT,
-    code        VARCHAR(50)     NOT NULL,
-    name        VARCHAR(200)    NOT NULL,
+    category_code        VARCHAR(50)     NOT NULL,
+    category_name        VARCHAR(200)    NOT NULL,
     description TEXT,
     sort_order   BIGINT,
     parent_id   BIGINT,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS category (
 CREATE TABLE IF NOT EXISTS product (
                                        id                BIGINT          NOT NULL AUTO_INCREMENT,
                                        product_hsc_code  VARCHAR(50)     NOT NULL,
-    name              VARCHAR(300)    NOT NULL,
+    product_name              VARCHAR(300)    NOT NULL,
     description       TEXT,
     unit_price        DECIMAL(15, 2)  NOT NULL,
     selling_price     DECIMAL(15, 2)  NOT NULL,

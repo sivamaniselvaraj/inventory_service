@@ -38,8 +38,8 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
         Category category = Category.builder()
-                .code(request.getCode())
-                .name(request.getName())
+                .categoryCode(request.getCode())
+                .categoryName(request.getName())
                 .description(request.getDescription())
                 .sortOrder(request.getSortOrder())
                 .parent(parent)
@@ -89,12 +89,12 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryResponse toResponse(Category category) {
         return CategoryResponse.builder()
                 .id(category.getId())
-                .code(category.getCode())
-                .name(category.getName())
+                .code(category.getCategoryCode())
+                .name(category.getCategoryName())
                 .description(category.getDescription())
                 .sortOrder(category.getSortOrder())
                 .parentId(category.getParent() != null ? category.getParent().getId() : null)
-                .parentName(category.getParent() != null ? category.getParent().getName() : null)
+                .parentName(category.getParent() != null ? category.getParent().getCategoryName() : null)
                 .active(category.isActive())
                 .createdAt(category.getCreatedAt())
                 .build();
